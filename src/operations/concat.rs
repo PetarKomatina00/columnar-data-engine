@@ -1,0 +1,52 @@
+//     pub fn concat_columns<U>(self, data: Vec<U>) -> Column<String>
+//         where 
+//         T: Display,
+//         U: Display{
+//         if self.data.len() != data.len(){
+//             panic!("Vectors must be same len");
+//         }
+//         let result: Vec<String> = self.data.iter().zip(data.iter())
+//         .map(|(a,b)| format!("{} {}", a,b)).collect();
+//         Column { data: result }
+//     }
+// }
+
+// use std::fmt::Display;
+
+// use crate::traits::operations::Operation;
+// struct ConcatOp<F>{
+//     predicate: F
+// }
+
+// impl<T,U,F> Operation<T> for ConcatOp<F> where 
+// T: Display,
+// U: Display
+// {
+//     type Output = String;
+//     fn execute(self, input: crate::column::Column<T>) -> crate::column::Column<Self::Output> {
+//         if 
+//     }
+
+// }
+
+use std::fmt::Display;
+
+use crate::traits::traits::BinaryTrait;
+use crate::Column;
+pub struct ConcatOp;
+
+impl<T,U> BinaryTrait<T,U> for ConcatOp
+where 
+T: Display,
+U:Display{
+    type Output = String;
+
+    fn execute(self, data_left: Column<T>, data_right: Column<U>) -> Column<Self::Output> {
+        let result = data_left.data
+            .into_iter()
+            .zip(data_right.data.into_iter())
+            .map(|(a,b)|format!("{} {}",a,b))
+            .collect();
+        Column { data: result }
+    }
+} 

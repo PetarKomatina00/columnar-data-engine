@@ -1,6 +1,12 @@
 mod column;
-
+mod operations;
+mod traits;
+mod engine;
 use column::Column;
+
+use crate::engine::{binary_engine, unary_engine};
+use crate::operations::filter;
+use crate::operations::map;
 fn main() {
 
     let names = vec!["Petar", "Koma", "Nikolija", "Kosta"].to_vec();
