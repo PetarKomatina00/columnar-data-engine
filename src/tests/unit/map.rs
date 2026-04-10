@@ -27,4 +27,17 @@ mod map{
         
         assert_eq!(result, test_result);
     }
+
+    #[test]
+    fn test_map_op_empty_arr(){
+        let (result, test_result) = map_op(Column {data : Vec::new()}, MapOp { predicate: |v: &i32| v + 2});
+        assert_eq!(result, test_result);
+    }
+    #[test]
+    #[should_panic]
+    fn test_map_op_ed_max_size_arr(){
+        let (result, test_result) = map_op(Column {data : vec![i32::MAX]}, MapOp { predicate: |v: &i32| v + 2});
+        
+        assert_eq!(result, test_result);
+    }
 }

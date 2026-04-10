@@ -16,7 +16,7 @@ use crate::{engine::unary_engine, models::column::Column, operations::filter::Fi
 #[cfg(test)]
 mod filter{
     use std::iter::Filter;
-    use crate::{engine::unary_engine, models::column::Column, operations::filter::FilterOp, tests::filter::filter_op};
+    use crate::{engine::unary_engine, models::column::Column, operations::filter::FilterOp, tests::unit::filter::filter_op};
     #[test]
     fn test_filter_op(){
 
@@ -24,6 +24,28 @@ mod filter{
         let col_names = Column {data : names};
 
         let operation = FilterOp {predicate : |v: &&str| *v == "Alice"};
+        let (result, test_result) = filter_op(col_names, operation);
+
+        assert_eq!(result, test_result);
+    }
+
+    #[test]
+    fn test_filter_op_pass_all(){
+        let names: Vec<&str> = vec!["John", "John", "John"];
+        let col_names = Column {data : names};
+
+        let operation = FilterOp {predicate : |v: &&str| *v == "John"};
+        let (result, test_result) = filter_op(col_names, operation);
+
+        assert_eq!(result, test_result);
+    }
+
+    #[test]
+    fn test_filter_op_deny_all(){
+        let names: Vec<&str> = vec!["John", "Alice", "Bob"];
+        let col_names = Column {data : names};
+
+        let operation = FilterOp {predicate : |v: &&str| *v == "Doe"};
         let (result, test_result) = filter_op(col_names, operation);
 
         assert_eq!(result, test_result);
