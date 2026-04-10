@@ -1,5 +1,5 @@
 
-use crate::Column;
+use crate::models::column::Column;
 // impl<T: Clone> Column<T>{
 //     fn filter_mask(&self, statement: fn(&T) -> bool) -> Vec<bool>{
 //     self.data.iter().map(|v| statement(v)).collect()
@@ -19,11 +19,12 @@ use crate::Column;
 // }
 
 use crate::traits::traits::UnaryTrait;
-struct FilterOp<F>{
-    predicate: F
+#[derive(Clone, Copy)]
+pub struct FilterOp<F>{
+    pub predicate: F
 }
 impl<T,F> UnaryTrait<T> for FilterOp<F>
-where F: Fn(&T) -> bool,
+where F: Fn(&T) -> bool
 {
     type Output = T;
 

@@ -2,7 +2,7 @@ use core::panic;
 use std::fmt::{Display, format, write};
 
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Column<T>{
     pub data: Vec<T>
 }

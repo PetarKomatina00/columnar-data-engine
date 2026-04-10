@@ -1,6 +1,6 @@
 
-use crate::{Column, traits::traits::BinaryTrait};
-fn execute_binary<T,U, Op>(
+use crate::{models::column::Column, traits::traits::BinaryTrait};
+pub fn execute_binary<T,U, Op>(
     data_left: Column<T>,
     data_right: Column<U>,
     predicate: Op

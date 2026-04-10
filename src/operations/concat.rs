@@ -32,7 +32,7 @@
 use std::fmt::Display;
 
 use crate::traits::traits::BinaryTrait;
-use crate::Column;
+use crate::models::column::Column;
 pub struct ConcatOp;
 
 impl<T,U> BinaryTrait<T,U> for ConcatOp
@@ -42,7 +42,11 @@ U:Display{
     type Output = String;
 
     fn execute(self, data_left: Column<T>, data_right: Column<U>) -> Column<Self::Output> {
-        let result = data_left.data
+        if data_left.data.len() != data_right.data.len(){
+            panic!("Columns need to be the same length");
+        }
+        
+        let result: Vec<String> = data_left.data
             .into_iter()
             .zip(data_right.data.into_iter())
             .map(|(a,b)|format!("{} {}",a,b))

@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use crate::column::Column;
+use crate::models::column::Column;
 
 // impl<T> Column<T>{
 //     pub fn map_column<U, F>(self, statement: F) -> Column<U>
@@ -25,14 +25,14 @@ use crate::column::Column;
 
 use crate::traits::traits::UnaryTrait;
 
-struct MapOp<F>{
-    predicate: F
+pub struct MapOp<F>{
+    pub predicate: F
 }
 impl<T,U,F> UnaryTrait<T> for MapOp<F>
-where F: Fn(T) -> U{
+where F: Fn(&T) -> U{
     type Output = U;
     fn execute(self, input: Column<T>) -> Column<Self::Output> {
-        let data: Vec<U> = input.data.into_iter().map(|v| (self.predicate)(v)).collect();
+        let data: Vec<U> = input.data.into_iter().map(|v| (self.predicate)(&v)).collect();
         Column { data }
     }
 }

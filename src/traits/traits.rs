@@ -1,5 +1,7 @@
+use crate::models::column::Column;
 
-use crate::Column;
+
+
 pub trait UnaryTrait<T> {
     type Output;
 
