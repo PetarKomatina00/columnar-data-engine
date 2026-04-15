@@ -4,7 +4,7 @@ use crate::{engine::unary_engine, models::column::Column, operations::filter::Fi
     where F: Fn(&T) -> bool{
         let temp_data = input.clone();
         let temp_op = op.clone();
-        let result = unary_engine::execute(input, op);
+        let result = unary_engine::execute_unary(input, op);
         let test_result = temp_data.data
             .into_iter()
             .filter(temp_op.predicate)

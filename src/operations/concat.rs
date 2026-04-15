@@ -35,22 +35,23 @@ use crate::traits::traits::BinaryTrait;
 use crate::models::column::Column;
 pub struct ConcatOp;
 
-impl<T,U> BinaryTrait<T,U> for ConcatOp
+impl<T> BinaryTrait<T, T> for ConcatOp
 where 
-T: Display,
-U:Display{
-    type Output = String;
+T: Display{
+    type Output = T;
 
-    fn execute(self, data_left: Column<T>, data_right: Column<U>) -> Column<Self::Output> {
+    fn execute(self, mut data_left: Column<T>, data_right: Column<T>) -> Column<Self::Output> {
         if data_left.data.len() != data_right.data.len(){
             panic!("Columns need to be the same length");
         }
         
-        let result: Vec<String> = data_left.data
-            .into_iter()
-            .zip(data_right.data.into_iter())
-            .map(|(a,b)|format!("{} {}",a,b))
-            .collect();
-        Column { data: result }
+        // let result: Vec<String> = data_left.data
+        //     .into_iter()
+        //     .zip(data_right.data.into_iter())
+        //     .map(|(a,b)|format!("{} {}",a,b))
+        //     .collect();
+
+        data_left.data.extend(data_right.data);
+        Column { data:  data_left.data}
     }
 } 

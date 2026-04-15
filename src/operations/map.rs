@@ -29,10 +29,10 @@ pub struct MapOp<F>{
     pub predicate: F
 }
 impl<T,U,F> UnaryTrait<T> for MapOp<F>
-where F: Fn(&T) -> U{
+where F: FnMut(T) -> U{
     type Output = U;
-    fn execute(self, input: Column<T>) -> Column<Self::Output> {
-        let data: Vec<U> = input.data.into_iter().map(|v| (self.predicate)(&v)).collect();
+    fn execute(mut self, input: Column<T>) -> Column<Self::Output> {
+        let data: Vec<U> = input.data.into_iter().map(|v| (self.predicate)(v)).collect();
         Column { data }
     }
 }
